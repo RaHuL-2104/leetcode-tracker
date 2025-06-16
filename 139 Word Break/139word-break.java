@@ -1,0 +1,51 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[s.length()] = true;
+        for(int i = s.length() - 1; i >= 0; i--){
+            for(String w : wordDict){
+                if((w.length() + i) <= s.length() && s.substring(i,i+w.length()).equals(w)){
+                    dp[i] = dp[i+w.length()];
+                }
+                if(dp[i]){
+                    break;
+                }
+            }
+        }
+        return dp[0];
+    }
+}
+// Top - Down Approach
+/**
+private HashSet<String> wordSet;
+private Boolean[] memo;
+private int t;
+public boolean wordBreak(String s, List<String> wordDict){
+    wordSet = new HashSet<>(wordDict);
+    memo = new Boolean[s.length()];
+    t = 0;
+    for(int i = 0; i < wordDict.size(); i++){
+        t = Math.max(t, wordDict.get(i).length());
+    }
+    return dfs(s,0);
+}
+private boolean dfs(String s, int i){
+    if(i == s.length()){
+        return true;
+    }
+    if(memo[i] != null){
+        return memo[i];
+    }
+    for(int j = i; j < Math.min(i+t, s.length()); j++){
+        if(wordSet.contains(s.substring(i,j + 1))){
+            if(dfs(s,j+1)){
+                memo[i] = true;
+                return true;
+            }
+        }
+    }
+    memo[i] = false;
+    return false;
+}
+
+ */
