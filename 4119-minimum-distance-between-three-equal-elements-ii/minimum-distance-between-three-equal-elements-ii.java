@@ -3,14 +3,14 @@ class Solution {
         int n = nums.length;
         HashMap<Integer, List<Integer>> mp = new HashMap<>();
         int result = n;
-        for(int i = 0; i < n; i++){
-            mp.putIfAbsent(nums[i], new ArrayList<>());
-            mp.get(nums[i]).add(i);
-            if(mp.get(nums[i]).size() >= 3){
-                List<Integer> list = mp.get(nums[i]);
+        for(int k = 0; k < n; k++){
+            mp.putIfAbsent(nums[k], new ArrayList<>());
+            mp.get(nums[k]).add(k);
+            if(mp.get(nums[k]).size() >= 3){
+                List<Integer> list = mp.get(nums[k]);
                 int s = list.size();
-                int j = list.get(s - 3);
-                result = Math.min(result, i-j);
+                int i = list.get(s - 3);
+                result = Math.min(result, k-i);
             }
         }
         return result >= n ? -1 : 2 * result;
