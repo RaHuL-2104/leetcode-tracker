@@ -13,25 +13,20 @@
  *     }
  * }
  */
-
- // DFS search store in arraylist and then find minDiff
-
- // 1 2 3 4 6
 class Solution {
-    public void dfs(TreeNode node, ArrayList<Integer> res){
+    public int minDiff = Integer.MAX_VALUE;
+    TreeNode prev = null;
+    private void inorder(TreeNode node){
         if(node == null) return;
-        dfs(node.left,res);
-        res.add(node.val);
-        dfs(node.right,res);
+        inorder(node.left);
+        if(prev != null){
+            minDiff = Math.min(minDiff, node.val - prev.val);
+        }
+        prev = node;
+        inorder(node.right);
     }
     public int getMinimumDifference(TreeNode root) {
-        if(root == null) return 0;
-        ArrayList<Integer> res = new ArrayList<>();
-        dfs(root, res);
-        int minDiff = Integer.MAX_VALUE;
-        for(int i = 1; i < res.size(); i++){
-            minDiff = Math.min(minDiff,Math.abs(res.get(i) - res.get(i-1)));
-        }
+        inorder(root);
         return minDiff;
     }
 }
